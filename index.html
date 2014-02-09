@@ -1,0 +1,50 @@
+<html>
+	<head>
+
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="container">
+				<div id="hangman-jquery" >
+					<div class="container-body">
+						<div class="right_block">
+							<div class="score_block">
+								<div class="score_title">
+									Score!
+								</div>
+								<div class="chance">
+									<span class="chance_title">Chance:</span><span class="chance_value"></span>
+								</div>
+								<div id="score_value_block"></div>
+								<div class="lose_win"></div>
+							</div>
+							<div id="alpha"></div>
+						</div>
+
+						<div class="picture_block">
+							<canvas id="hangman" width='400' height='400'></canvas>
+							<div class="play_again_button">
+							Play again!
+						</div>
+						</div>
+						
+						<div class="word_block">
+							<div id="word"></div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="start_button">
+					<a id= "BUT"><span class="start_button_value">START</span></a>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src='js/jquery-1.9.1.js'></script>
+	<script src='js/jCanvas.min.js'></script>
+	<script src='js/script.js'></script>
+
+</html>

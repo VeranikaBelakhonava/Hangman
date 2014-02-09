@@ -1,0 +1,161 @@
+body {
+	background: #414456;
+}
+#wrap {
+	width: 100%;
+}
+.container {
+	margin: 0 5%;
+	width: 90%;
+}
+
+.start_button {
+	width: 80px;
+	height: 40px;
+	display: inline-block;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	background: #7f7f7a;
+	border-radius: 6px;
+	cursor: pointer;
+	border: 5px solid #ffffff;
+}
+.start_button_value {
+	float: left;
+	margin-top: 10px;
+	margin-left: 14px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+#BUT {
+	background: #7f7f7a;
+}
+#hangman-jquery {
+	display: none;
+}
+.container-body {
+	display: inline-block;
+	border-radius: 10px;
+	border: 10px solid #cecece;
+	margin: 5%;
+	min-width: 1005px;
+	width: 90%;
+	text-align: center;
+	background: #ffffff;
+}
+.picture_block {
+	display: inline-block;
+	width: 570px;
+	border: 3px solid #000000;
+	margin: 2%;
+	text-align: center;
+	background: #000000;
+	border-radius: 20px;
+}
+#hangman {
+}
+.play_again_button {
+	display: inline-block;
+	visibility: hidden;
+	text-align: center;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 30px;
+	color: white;
+	margin: 10px;
+}
+.play_again_button:hover {
+	color: #DBDBDB;
+}
+.right_block {
+	display: inline-block;
+	float: right;
+	width: 380px;
+}
+.score_block {
+	display: inline-block;
+	margin: 5%;
+	width: 90%;
+	background: #ccd6ed;
+	height: 160px;
+	border-radius: 30px;
+}
+.score_title {
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+	cursor: default;
+}
+#score_value_block {
+	display: inline-block;
+	width: 40%;
+	text-align: center;
+	font-size: 40px;
+	cursor: default;
+	color: #ffffff;
+	border-radius: 5px;
+}
+.score_value {
+	cursor: default;
+}
+.chance {
+	text-align: center;
+}
+.chance_title {
+	font-size: 22px;
+	margin-right: 10px;
+	cursor: default;
+}
+.chance_value {
+	cursor: default;
+}
+.lose_win {
+	text-align: center;
+	font-size: 40px;
+	cursor: default;
+	font-style: italic;
+}
+#alpha {
+	float: right;
+}
+.letter {
+	display: inline-block;
+	padding: 3px;
+	margin: 10px;
+	width: 20px;
+	height: 20px;
+	font-size: 23px;
+	font-weight: bold;
+	border-bottom: 3px solid #000000;
+	cursor: default;
+}
+
+.guess {
+	width: 20px;
+	padding: 5px;
+	margin: 10px;
+	display: inline-block;
+	cursor: pointer;
+	border: 1px solid #7F7F7A;
+	font-weight: bold;
+	background: #cecece;
+	text-align: center;
+}
+.guess:hover {
+	padding: 5px;
+	margin: 8px;
+	border: 3px solid #7F7F7A;
+}
+.word_block {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	/*min-height: 130px;*/
+	/*height: 18%;*/
+	background: #cecece;
+}
+#word {
+
+}
