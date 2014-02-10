@@ -1,14 +1,15 @@
 /*-----------------------------
  * GUESS A WORD function.
  * ------------------------*/
-function hangman(word) {
+function hangman(friends_list) {
+	var word = chooseWord(friends_list);
 	var alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$('.guess').remove();
 	$('.letter').remove();
 	var total_chance_number = 6;
 	var max_chance_number = 6;
 	var open_letters = 0;
-	
+
 	$('.chance_value').text(total_chance_number - max_chance_number + '/' + max_chance_number);
 	$.each(alpha.split(''), function(i, val) {
 		$('#alpha').append($('<span class="guess">' + val + '</span>'));
@@ -149,21 +150,63 @@ function clearDrawArea() {
 	context.clearRect(245, 105.1, 150, 290);
 }
 
-function chooseWord() {
-	var lastname_list = ["Zdanovich", "Guglya", "Levusov", "Bobrovich", "Kartashova", "Rapovets", "Baranova", "Maslyuk", "Worobjova"];
+function chooseWord(lastname_list) {
+	/*var lastname_list = ["Zdanovich", "Guglya", "Levusov", "Bobrovich", "Kartashova", "Rapovets", "Baranova", "Maslyuk", "Worobjova"];*/
 	return lastname_list[Math.floor(Math.random() * lastname_list.length)].toUpperCase();
+}
+
+function initFB() {
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId : '265535743612006',
+			status : true,
+			xfbml : true
+		});
+	}; ( function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {
+				return;
+			}
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/en_US/all.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+}
+
+function getFriends() {
+	FB.login(function(response) {
+		if (response.authResponse) {
+			console.log('Welcome!  Fetching your information.... ');
+
+			FB.api('/me/friends', function(response) {
+				if (response.data) {
+					var friends_list = [];
+					$.each(response.data, function(index, friend) {
+						friends_list.push(friend.last_name);
+					});
+					hangman(friends_list);
+				} else {
+					alert("Error!");
+				}
+			});
+		} else {
+			console.log('User cancelled login or did not fully authorize.');
+		}
+	});
 }
 
 
 $(document).ready(function() {
+	initFB();
 	$('#BUT').click(function() {
+		
 		$('.start_button').css('display', 'none');
 		$('#hangman-jquery').css('display', 'block');
-		
+
 		/* Drawing general elements(gibbet)*/
 		gibbetDraw();
-		
-		/*CALL FUNCTION for choosing a random word(lastname)!*/
-		hangman(chooseWord());
+		getFriends();
+
 	});
 });
