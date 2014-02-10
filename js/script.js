@@ -1,8 +1,12 @@
 /*-----------------------------
  * GUESS A WORD function.
  * ------------------------*/
-function hangman(friends_list) {
+var friends_list = [];
+function hangman() {
 	var word = chooseWord(friends_list);
+	friends_list = jQuery.grep(friends_list, function(a) {
+		return a.toUpperCase() !== word;
+	});
 	var alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$('.guess').remove();
 	$('.letter').remove();
@@ -43,8 +47,9 @@ function hangman(friends_list) {
 		 * Display red score block if you lose
 		 ------------------------*/
 		if (!max_chance_number) {
-			$('#score_value_block').append($('<span class="score_value">' + parseInt(open_letters / word_length * 100, 10) + '</span>'));
-			$('#score_value_block').css('background', 'red');
+			$('#score_value_block').append($('<span class="score_value">' + parseInt(open_letters / word_length * 100, 10) + '%</span>'));
+			$('#score_value_block').css('background', '#f0596f');
+			$('.score_list').append($('<li style="background: #f0596f"><a>' + word + ' ' + parseInt(open_letters / word_length * 100, 10) + '%</a></li>'));
 			$('.lose_win').text("LOSE");
 			$('.guess').unbind('click');
 			$('.play_again_button').css('visibility', 'visible');
@@ -60,23 +65,15 @@ function hangman(friends_list) {
 		 * Display green score block if you win
 		 ------------------------*/
 		if (open_letters == word_length) {
-			$('#score_value_block').append($('<span class="score_value">' + parseInt(max_chance_number / total_chance_number * 100, 10) + '</span>'));
-			$('#score_value_block').css('background', 'green');
+			$('#score_value_block').append($('<span class="score_value">' + parseInt(max_chance_number / total_chance_number * 100, 10) + '%</span>'));
+			$('#score_value_block').css('background', '#48ea9f');
+			$('.score_list').append($('<li style="background: #48ea9f"><a>' + word + ' ' + parseInt(max_chance_number / total_chance_number * 100, 10) + '%</a></li>'));
 			$('.lose_win').text("WIN");
 			$('.guess').unbind('click');
 			$('.play_again_button').css('visibility', 'visible');
 		}
 	});
-	/*------------------------
-	 * Replay the game.
-	 ------------------------*/
-	$('.play_again_button').on('click', function() {
-		$('.score_value').remove();
-		$('.lose_win').text("");
-		$('.play_again_button').css('visibility', 'hidden');
-		clearDrawArea();
-		hangman(chooseWord());
-	});
+
 }
 
 /*-------------------------------------
@@ -150,9 +147,15 @@ function clearDrawArea() {
 	context.clearRect(245, 105.1, 150, 290);
 }
 
-function chooseWord(lastname_list) {
-	/*var lastname_list = ["Zdanovich", "Guglya", "Levusov", "Bobrovich", "Kartashova", "Rapovets", "Baranova", "Maslyuk", "Worobjova"];*/
-	return lastname_list[Math.floor(Math.random() * lastname_list.length)].toUpperCase();
+function chooseWord() {
+
+	if (!friends_list || friends_list.length == 0) {
+		friends_list = ["Zdanovich", "Guglya", "Levusov", "Bobrovich", "Kartashova", "Rapovets", "Baranova", "Maslyuk", "Worobjova"];
+		alert("List of friends is empty!");
+	}
+	var lastname = friends_list[Math.floor(Math.random() * friends_list.length)].toUpperCase();
+
+	return lastname;
 }
 
 function initFB() {
@@ -162,7 +165,8 @@ function initFB() {
 			status : true,
 			xfbml : true
 		});
-	}; ( function(d, s, id) {
+	};
+	( function(d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) {
 				return;
@@ -179,13 +183,13 @@ function getFriends() {
 		if (response.authResponse) {
 			console.log('Welcome!  Fetching your information.... ');
 
-			FB.api('/me/friends', function(response) {
+			FB.api('/me/friends?fields=last_name', function(response) {
 				if (response.data) {
-					var friends_list = [];
+					//var friends_list = [];
 					$.each(response.data, function(index, friend) {
 						friends_list.push(friend.last_name);
 					});
-					hangman(friends_list);
+					hangman();
 				} else {
 					alert("Error!");
 				}
@@ -200,13 +204,29 @@ function getFriends() {
 $(document).ready(function() {
 	initFB();
 	$('#BUT').click(function() {
-		
+		getFriends();
 		$('.start_button').css('display', 'none');
 		$('#hangman-jquery').css('display', 'block');
 
 		/* Drawing general elements(gibbet)*/
 		gibbetDraw();
-		getFriends();
 
 	});
+	/*------------------------
+	 * Replay the game.
+	 ------------------------*/
+	$('.play_again_button').on('click', function() {
+		$('.score_value').remove();
+		$('.lose_win').text("");
+		$('.play_again_button').css('visibility', 'hidden');
+		clearDrawArea();
+		hangman();
+	});
+	/*	$('#nav li').hover(function() {
+	 //show its submenu
+	 $('ul', this).stop().slideDown(100);
+	 }, function() {
+	 //hide its submenu
+	 $('ul', this).stop().slideUp(100);
+	 });*/
 });
