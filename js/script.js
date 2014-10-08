@@ -5,6 +5,8 @@ var friends_list = [];
 function hangman() {
 	var word = chooseWord(friends_list);
 	friends_list = jQuery.grep(friends_list, function(a) {
+	
+	
 		return a.toUpperCase() !== word;
 	});
 	var alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
